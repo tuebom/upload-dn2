@@ -35,12 +35,12 @@ var app = new Framework7({
 
     init: function () { // sama dengan onDeviceReady
       // pictureSource = navigator.camera.PictureSourceType;
-      // destinationType = navigator.camera.DestinationType;
+      destinationType = navigator.camera.DestinationType;
 
-      // var imageData = localStorage.getItem('profile');
-      // if (imageData) {
-      //   $$('img.responsive.profile').attr('src', "data:image/jpeg; base64," + imageData);
-      // }
+      var imageData = localStorage.getItem('profile');
+      if (imageData) {
+        $$('img.responsive.profile').attr('src', "data:image/jpeg; base64," + imageData);
+      }
     }
   },      
   routes: [
