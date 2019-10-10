@@ -53,10 +53,11 @@
         app.data.currentDate = $$('#tgltrx').val();
         // app.dialog.alert($$('#tgltrx').val());
           
-        app.router.navigate('/', {
-          reloadCurrent: true,
-          ignoreCache: true,
-        });
+        app.views.main.router.refreshPage();
+        // app.router.navigate('/', {
+        //   reloadCurrent: true,
+        //   ignoreCache: true,
+        // });
       },
 
       ambilSJ: function (e) {

@@ -51,10 +51,11 @@
       dateChg: function (e) {
         app.data.currentDate = $$('#tgltrx').val();
           
-        app.router.navigate('/', {
-          reloadCurrent: true,
-          ignoreCache: true,
-        });
+        app.views.main.router.refreshPage();
+        // app.router.navigate('/', {
+        //   reloadCurrent: true,
+        //   ignoreCache: true,
+        // });
       },
       
       uploadFoto: function (e) {
