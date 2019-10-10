@@ -35,12 +35,12 @@ var app = new Framework7({
 
     init: function () { // sama dengan onDeviceReady
       // pictureSource = navigator.camera.PictureSourceType;
-      destinationType = navigator.camera.DestinationType;
+      // destinationType = navigator.camera.DestinationType;
 
-      var imageData = localStorage.getItem('profile');
-      if (imageData) {
-        $$('img.responsive.profile').attr('src', "data:image/jpeg; base64," + imageData);
-      }
+      // var imageData = localStorage.getItem('profile');
+      // if (imageData) {
+      //   $$('img.responsive.profile').attr('src', "data:image/jpeg; base64," + imageData);
+      // }
     }
   },      
   routes: [
@@ -73,7 +73,7 @@ var app = new Framework7({
                 app.data.currentDate = today;
               }
                       
-              var url = 'https://apgroup.id/api/resource/Delivery Note?fields=["lr_date","name","customer_name","address_display"]&filters=[["lr_date","=","'+today+'"],["need_delivery","=",1],["driver","=",""]]';
+              var url = 'https://apgroup.id/api/resource/Delivery Note?fields=["lr_date","name","customer_name","address_display"]&filters=[["lr_date","=","'+app.data.currentDate+'"],["need_delivery","=",1],["driver","=",""]]';
               
               app.request.getJSON(encodeURI(url), {/* Your param if set */}, function (data) {
 
@@ -111,7 +111,7 @@ var app = new Framework7({
               app.data.currentDate = today;
             }
       
-            var url = 'https://apgroup.id/api/resource/Delivery Note?fields=["lr_date","name","customer_name","address_display"]&filters=[["lr_date","=","'+today+'"],["deliver_date","<","1900-01-01"],["driver","=","' + app.data.user + '"]]';
+            var url = 'https://apgroup.id/api/resource/Delivery Note?fields=["lr_date","name","customer_name","address_display"]&filters=[["lr_date","=","'+app.data.currentDate+'"],["deliver_date","<","1900-01-01"],["driver","=","' + app.data.user + '"]]';
 
             app.request.getJSON(encodeURI(url), {/* Your param if set */}, function (data) {
               
@@ -133,6 +133,22 @@ var app = new Framework7({
       on: {
         
         pageInit: function(e, page) {
+          
+          if (!app.data.currentDate) {
+      
+            var now = new Date();
+            
+            var day = ("0" + now.getDate()).slice(-2);
+            var month = ("0" + (now.getMonth() + 1)).slice(-2);
+            
+            var today = now.getFullYear()+"-"+(month)+"-"+(day) ;
+            app.data.currentDate = today;
+          }
+
+          var today = new Date();
+
+          $$('#tgltrx').val(today);
+          $$('#tgltrx2').val(today);
           
           $$('.btn-refresh').on('click', function () {
             app.views.main.router.refreshPage();

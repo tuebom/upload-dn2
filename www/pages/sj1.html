@@ -1,27 +1,28 @@
 <template>
+
+  <div class="block content">
         
-  <div class="list no-hairlines-md">
-    <ul>
-      <li>
-        <div class="row no-gutter">
-          <div class="col-50">
-            <div class="item-content top-content item-input">
-              <div class="item-inner">
-                <div class="item-title item-label">Tanggal input</div>
-                <div class="item-input-wrap">
-                  <input id="tgltrx" name="tgltrx" type="date" value=""/>
+    <div class="list no-hairlines-md">
+      <ul>
+        <li>
+          <div class="row no-gutter">
+            <div class="col-50">
+              <div class="item-content top-content item-input">
+                <div class="item-inner">
+                  <div class="item-title item-label">Tanggal input</div>
+                  <div class="item-input-wrap">
+                    <input id="tgltrx" type="date" @change="dateChg"/>
+                  </div>
                 </div>
               </div>
             </div>
+            <div class="col-50">
+            </div>
           </div>
-          <div class="col-50">
-          </div>
-        </div>
-      </li>
-    </ul>
-  </div>
-
-  <div class="block content">
+        </li>
+      </ul>
+    </div>
+    
     <!-- Default pull to refresh preloader-->
     <!-- <div class="ptr-preloader">
       <div class="preloader"></div>
@@ -48,6 +49,16 @@
     // Component Methods
     methods: {
       
+      dateChg: function (e) {
+        app.data.currentDate = $$('#tgltrx').val();
+        // app.dialog.alert($$('#tgltrx').val());
+          
+        app.router.navigate('/', {
+          reloadCurrent: true,
+          ignoreCache: true,
+        });
+      },
+
       ambilSJ: function (e) {
         
         var $btnEl = e.srcElement;
@@ -83,18 +94,7 @@
       
       pageInit: function(e, page) {
         
-        $$('#tgltrx').val(app.data.currentDate);
-      
-        $$('#tgltrx').on('change', function(e){
-
-          app.data.currentDate = $$('#tgltrx').val();
-          app.dialog.alert(app.data.currentDate);
-          // app.router.navigate('/', {
-          //   reloadCurrent: true,
-          //   ignoreCache: true,
-          // });
-        });
-      
+        // app.dialog.alert('On init page 1!')
       }
     }
   }
