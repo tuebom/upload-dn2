@@ -1,7 +1,7 @@
 // Dom7
 var $$ = Dom7;
 
-// var pictureSource = null;
+var pictureSource = null;
 var destinationType = null;
 
 var app = new Framework7({
@@ -34,7 +34,7 @@ var app = new Framework7({
   on: {
 
     init: function () { // sama dengan onDeviceReady
-      // pictureSource = navigator.camera.PictureSourceType;
+      pictureSource = navigator.camera.PictureSourceType;
       destinationType = navigator.camera.DestinationType;
 
       var imageData = localStorage.getItem('profile');
@@ -45,8 +45,6 @@ var app = new Framework7({
   },      
   routes: [
     // Add your routes here
-    // Example:
-    
     {
       path: '/',
       url: './index.html',  
@@ -145,10 +143,10 @@ var app = new Framework7({
             app.data.currentDate = today;
           }
 
-          var today = new Date();
+          // var today = new Date();
 
-          $$('#tgltrx').val(today);
-          $$('#tgltrx2').val(today);
+          // $$('#tgltrx').val(today);
+          // $$('#tgltrx2').val(today);
           
           $$('.btn-refresh').on('click', function () {
             app.views.main.router.refreshPage();
