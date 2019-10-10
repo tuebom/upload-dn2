@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui, viewport-fit=cover">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="theme-color" content="#2196f3">
+    <title>ASKITCHEN</title>
+    <link rel="stylesheet" href="css/framework7.min.css">
+    <link rel="stylesheet" href="css/icons.css">
+    <link rel="stylesheet" href="css/app.css">
+  </head>
+  <body>
+    <div id="app">
+      <div class="statusbar"></div>
+
+      <!-- Left panel with reveal effect when hidden -->
+      <div class="panel panel-left panel-cover">
+        <div class="view view-left">
+          <div class="page">
+            <div class="page-content">
+              <div class="block">
+                  <div class="member-picture">
+                    <a href="#" class="profile-picture"><img class="responsive profile" src="img/user.png" /></a>
+                  </div>
+                  <div class="member-info">
+                    <div class="member-name">Driver</div>
+                  </div>
+              </div>
+              
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <div class="view view-main">
+        <div data-name="home" class="page">
+          <div class="navbar">
+            <div class="navbar-inner sliding">
+              <div class="left">
+                <a href="#" class="link icon-only panel-open" data-panel="left">
+                  <i class="icon f7-icons ios-only">menu</i>
+                  <i class="icon material-icons md-only">menu</i>
+                </a>
+              </div>
+              <div class="center">DAFTAR SURAT JALAN</div>
+              <div class="right">
+                <a href="#" class="link icon-only btn-refresh">
+                <i class="icon f7-icons ios-only">refresh</i>
+                <i class="icon material-icons md-only">refresh</i>
+                </a>
+              </div>
+            </div>
+          </div>
+          
+          <div class="toolbar tabbar">
+            <div class="toolbar-inner">
+              <a href="/" class="tab-link" data-route-tab-id="tab1">BELUM DIAMBIL</a>
+              <a href="tab2/" class="tab-link" data-route-tab-id="tab2">SUDAH DIAMBIL</a>
+            </div>
+          </div>
+
+          <div class="tabs tabs-routable">
+            <div class="page-content tab" id="tab1"></div>
+            <div class="page-content tab" id="tab2"></div>
+          </div>
+  
+        </div>
+      </div>
+
+      <!-- Login Screen -->
+      <div class="login-screen modal-in" id="my-login-screen">
+        <div class="view">
+          <div class="page">
+            <div class="page-content">
+
+              <!-- <div class="header-container"> -->
+              <div class="block">
+                <img class="profile-header" src="img/logo.png" style="display: block; margin: auto;" />
+              </div>
+      
+              <form class="login-form form-ajax-submit">
+                <div class="block-header text-align-center"><h3>Login User</h3></div>
+                <div class="block">
+                  <div class="list no-hairlines-md">
+                      <ul>
+                        <li>
+                          <div class="item-content item-input">
+                            <div class="item-inner">
+                              <div class="item-title item-label">Email</div>
+                              <div class="item-input-wrap">
+                                <input type="text" id="email" name="usr" placeholder="Email" />
+                              </div>
+                            </div>
+                          </div>
+                        </li>
+                        <li>
+                          <div class="item-content item-input">
+                            <div class="item-inner">
+                              <div class="item-title item-label">Password</div>
+                              <div class="item-input-wrap">
+                                <input type="password" id="password" name="pwd" placeholder="Password"/>
+                              </div>
+                            </div>
+                          </div>
+                        </li>
+                      </ul>
+                  </div>
+                </div>
+                <div class="content-block"><a href="#" class="button button-raised button-fill larger login-button">LOGIN</a></div>
+              </form>
+    
+              <div class="kb"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+    <script src="cordova.js"></script>
+    <script type="text/javascript" src="js/framework7.min.js"></script>
+    <script type="text/javascript" src="js/main.js"></script>
+  </body>
+</html>

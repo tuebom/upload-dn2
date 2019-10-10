@@ -1,0 +1,210 @@
+<template>
+  <div data-name="upload" class="page">
+    <div class="navbar">
+      <div class="navbar-inner">
+        <div class="left">
+            <a href="#" class="link back">
+                <i class="icon icon-back"></i>
+                <span class="ios-only">Back</span>
+            </a>
+        </div>
+        <div class="center">Upload Foto</div>
+        <div class="right"><a href="#" class="link open-panel icon-only"><i class="icon icon-bars"></i></a></div>
+      </div>
+    </div>
+    <div class="page-content">
+
+      <div class="content-block">
+        <form class="upload-form form-ajax-submit">
+          <input type="hidden" name="cmd"       value="uploadfile" />
+          <input type="hidden" name="doctype"   value="Delivery Note" />
+          <input type="hidden" name="docname"   value="{{name}}" id="docname" />
+          <input type="hidden" name="filename"  value="{{name}}.jpg" id="filename" />
+          <input type="hidden" name="filedata"  value="" id="filedata" />
+          <input type="hidden" name="from_form" value="1" />
+
+          <!-- <div class="card">
+            <div class="card-header"><span><b>{{name}}</b></span><span>{{lr_date}}</span></div>
+            <div class="card-content"> 
+              <div class="card-content-inner" style="padding: 15px 16px;">
+                <div style="width: 100%; display: inline-flex;">
+                  <div style="width: 75%; margin-top: 5px"><b>{{customer_name}}</b></div>
+                  <div style="width: 25%;"><a href="#" dn-number="{{name}}" class="button button-small button-fill color-blue btn-ambil">Ambil</a></div>
+                </div>
+                {{address_display}}
+
+              </div>
+            </div>
+          </div> -->
+        </form>
+      </div>
+
+      <div class="card">
+        <!-- <div class="card-header"></div> -->
+        <div class="card-content">
+          <div class="card-content-inner"><img id="cameraimage" src="img/noimage.png" style="height: 480px;" width="100%"></div>
+        </div>
+        <div class="card-footer">
+          <a href="#" class="button button-fill color-blue btn-foto">Ambil Foto</a>
+          <a href="#" dn-number="{{name}}" class="button button-fill color-blue btn-upload">Upload Foto</a>
+        </div>
+      </div>
+  </div>
+</template>
+<script>
+    return {
+      // Page Events
+      on: {
+        
+        pageInit: function(e, page) {
+
+          var ac_photo = app.actions.create({
+            buttons: [
+              {
+                text: 'Gunakan kamera',
+                onClick: function () {
+                      
+                  // app.dialog.alert('Camera!');
+                  var options = {
+                    quality: 50,
+                    destinationType: destinationType.DATA_URL,
+                    sourceType: Camera.PictureSourceType.CAMERA,
+                    encodingType: Camera.EncodingType.JPEG,
+                    mediaType: Camera.MediaType.PICTURE,
+                    targetWidth: 320, // 360
+                    targetHeight: 480, // 360
+                    // allowEdit: true,
+                    correctOrientation: true  //Corrects Android orientation quirks
+                    // popoverOptions: CameraPopoverOptions,
+                    // saveToPhotoAlbum: false
+                  };
+
+                  // update camera image directive
+                  navigator.camera.getPicture(function cameraSuccess(imageData) {
+                    $$('#cameraimage').attr('src', "data:image/jpeg; base64," + imageData);
+                    $$('#filedata').val(imageData);
+                  }, function cameraError(err) {
+                    // console.log('Failed because: ');
+                    app.dialog.alert(err);
+                  }, options);
+                }
+              },
+              {
+                text: 'Ambil dari gallery',
+                onClick: function () {
+                      
+                  // app.dialog.alert('You choose gallery!');
+                  var options = {
+                    quality: 50,
+                    destinationType: destinationType.DATA_URL,
+                    sourceType: Camera.PictureSourceType.SAVEDPHOTOALBUM,
+                    encodingType: Camera.EncodingType.JPEG,
+                    mediaType: Camera.MediaType.PICTURE,
+                    targetWidth: 320, // 360
+                    targetHeight: 480, // 360
+                    // allowEdit: true,
+                    correctOrientation: true  //Corrects Android orientation quirks
+                    // popoverOptions: CameraPopoverOptions,
+                    // saveToPhotoAlbum: false
+                  };
+
+                  // update camera image directive
+                  navigator.camera.getPicture(function cameraSuccess(imageData) {
+                    $$('#cameraimage').attr('src', "data:image/jpeg; base64," + imageData);
+                    $$('#filedata').val(imageData);
+                  }, function cameraError(err) {
+                    // console.log('Failed because: ');
+                    app.dialog.alert(err);
+                  }, options);
+                }
+              },
+              {
+                text: 'Cancel',
+                color: 'red',
+                // onClick: function () {
+                //   app.dialog.alert('Cancel clicked')
+                // }
+              },
+            ]
+          });
+          
+          // ambil foto
+          $$('.btn-foto').on('click', function (e) {
+            
+            ac_photo.open();
+
+            // var options = {
+            //   quality: 50,
+            //   destinationType: destinationType.DATA_URL,
+            //   sourceType: pictureSource.CAMERA,
+            //   encodingType: Camera.EncodingType.JPEG,
+            //   mediaType: Camera.MediaType.PICTURE,
+            //   targetWidth: 320, // 360
+            //   targetHeight: 480, // 360
+            //   // allowEdit: true,
+            //   correctOrientation: true  //Corrects Android orientation quirks
+            //   // popoverOptions: CameraPopoverOptions,
+            //   // saveToPhotoAlbum: false
+            // };
+
+            // // update camera image directive
+            // navigator.camera.getPicture(function cameraSuccess(imageData) {
+            //   $$('#cameraimage').attr('src', "data:image/jpeg; base64," + imageData);
+            //   $$('#filedata').val(imageData);
+            // }, function cameraError(err) {
+            //   // console.log('Failed because: ');
+            //   app.dialog.alert(err);
+            // }, options);
+
+          });
+          
+          
+          // upload foto ke server
+          $$('.btn-upload').on('click', function (e) {
+            
+            var fn = $$('#filename').val();
+            fn = fn.replace(/\//g,'_');
+            $$('#filename').val(fn);
+            
+            var formData = app.form.convertToData('.upload-form');
+            
+            // ambil nomor DN
+            var strEncode = encodeURIComponent($$('#docname').val());
+  
+            app.preloader.show();
+            
+            app.request.post('https://apgroup.id/api/method', formData,
+            
+            function (res) { // sukses
+              app.preloader.hide();
+
+              // get current date
+              var now = new Date();
+              var date = now.getFullYear()+'-'+(now.getMonth()+1)+'-'+now.getDate();
+
+          
+              app.request({
+                url: "https://apgroup.id/api/resource/Delivery Note/" + strEncode,
+                method: 'PUT',
+                contentType: 'application/json',
+                data: '{ "deliver_date" : "'+ date + '"}',
+                statusCode: {
+                  
+                  200: function (xhr) {
+                    var view = app.views.current;
+                    view.router.back(view.history[0], { force: true });
+                  }
+                }
+              })
+
+            },
+            function (xhr, status) { // gagal
+    
+              app.preloader.hide();
+              app.dialog.alert('Upload foto gagal!', 'Login User');
+            });
+          });
+        }
+      }
+    }
+</script>

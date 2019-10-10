@@ -1,0 +1,100 @@
+<template>
+        
+  <div class="list no-hairlines-md">
+    <ul>
+      <li>
+        <div class="row no-gutter">
+          <div class="col-50">
+            <div class="item-content top-content item-input">
+              <div class="item-inner">
+                <div class="item-title item-label">Tanggal input</div>
+                <div class="item-input-wrap">
+                  <input id="tgltrx" name="tgltrx" type="date" value=""/>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-50">
+          </div>
+        </div>
+      </li>
+    </ul>
+  </div>
+
+  <div class="block content">
+    <!-- Default pull to refresh preloader-->
+    <!-- <div class="ptr-preloader">
+      <div class="preloader"></div>
+      <div class="ptr-arrow"></div>
+    </div> -->
+    {{#each data}}
+    <div class="card">
+      <div class="card-header"><span><b>{{name}}</b></span><span>{{lr_date}}</span></div>
+      <div class="card-content"> 
+        <div class="card-content-inner" style="padding: 5px 16px;">
+          <div style="width: 100%; display: inline-flex;">
+            <div style="width: 75%; margin-top: 4px"><b>{{customer_name}}</b></div>
+            <div style="width: 25%;"><a href="#" dn-number="{{name}}" @click="ambilSJ" class="button button-small button-fill color-blue btn-ambil">Ambil</a></div>
+          </div>
+          {{address_display}}
+        </div>
+      </div>
+    </div>
+    {{/each}}
+  </div>
+</template>
+<script>
+  return {
+    // Component Methods
+    methods: {
+      
+      ambilSJ: function (e) {
+        
+        var $btnEl = e.srcElement;
+        var number = $$($btnEl).attr('dn-number');
+
+        var strEncode = encodeURIComponent(number);
+        
+        // console.log(strUrl);
+        // console.log('Driver: '+app.data.user)
+        // var self = this;
+        // self.$app.dialog.alert('DN Number: '+encodeURIComponent(number));
+          
+        app.request({
+          url: "https://apgroup.id/api/resource/Delivery Note/" + strEncode,
+          method: 'PUT',
+          contentType: 'application/json',
+          data: '{ "driver" : "'+ app.data.user + '"}',
+          statusCode: {
+            200: function (xhr) {
+              // app.dialog.alert('Surat jalan telah diambil.');
+
+              app.router.navigate('/', {
+                reloadCurrent: true,
+                ignoreCache: true,
+              });
+            }
+          }
+        })
+      },
+    },
+    // Page Events
+    on: {
+      
+      pageInit: function(e, page) {
+        
+        $$('#tgltrx').val(app.data.currentDate);
+      
+        $$('#tgltrx').on('change', function(e){
+
+          app.data.currentDate = $$('#tgltrx').val();
+          app.router.navigate('/', {
+            reloadCurrent: true,
+            ignoreCache: true,
+          });
+        });
+      
+      }
+    }
+  }
+</script>
