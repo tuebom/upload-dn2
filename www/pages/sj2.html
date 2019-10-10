@@ -73,10 +73,11 @@
         $$('#tgltrx').on('change', function(e){
 
           app.data.currentDate = $$('#tgltrx').val();
-          app.router.navigate('/', {
-            reloadCurrent: true,
-            ignoreCache: true,
-          });
+          app.dialog.alert(app.data.currentDate);
+          // app.router.navigate('/', {
+          //   reloadCurrent: true,
+          //   ignoreCache: true,
+          // });
         });
       
       }
