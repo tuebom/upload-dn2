@@ -10,7 +10,7 @@
                 <div class="item-inner">
                   <div class="item-title item-label">Tanggal input</div>
                   <div class="item-input-wrap">
-                    <input id="tgltrx2" type="date" value=""/>
+                    <input id="tgltrx2" type="date" @change="dateChg" value="{{$root.currentDate}}"/>
                   </div>
                 </div>
               </div>
@@ -48,6 +48,16 @@
     // Component Methods
     methods: {
       
+      dateChg: function (e) {
+        app.data.currentDate = $$('#tgltrx').val();
+        // app.dialog.alert($$('#tgltrx').val());
+          
+        app.router.navigate('/', {
+          reloadCurrent: true,
+          ignoreCache: true,
+        });
+      },
+      
       uploadFoto: function (e) {
         
         var $btnEl = e.srcElement;
@@ -63,12 +73,5 @@
         app.router.navigate('/upload/' + strEncode);
       },
     },
-    // Page Events
-    on: {
-      
-      pageInit: function(e, page) {
-        
-      }
-    }
   }
 </script>

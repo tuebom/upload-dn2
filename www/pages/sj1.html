@@ -11,7 +11,7 @@
                 <div class="item-inner">
                   <div class="item-title item-label">Tanggal input</div>
                   <div class="item-input-wrap">
-                    <input id="tgltrx" type="date" @change="dateChg"/>
+                    <input id="tgltrx" type="date" @change="dateChg" value="{{$root.currentDate}}"/>
                   </div>
                 </div>
               </div>
@@ -89,13 +89,5 @@
         })
       },
     },
-    // Page Events
-    on: {
-      
-      pageInit: function(e, page) {
-        
-        // app.dialog.alert('On init page 1!')
-      }
-    }
   }
 </script>
