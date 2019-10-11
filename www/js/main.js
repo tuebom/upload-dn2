@@ -98,16 +98,16 @@ var app = new Framework7({
             app.preloader.show();
         
             
-            if (!app.data.currentDate) {
+            // if (!app.data.currentDate) {
       
-              var now = new Date();
+            //   var now = new Date();
               
-              var day = ("0" + now.getDate()).slice(-2);
-              var month = ("0" + (now.getMonth() + 1)).slice(-2);
+            //   var day = ("0" + now.getDate()).slice(-2);
+            //   var month = ("0" + (now.getMonth() + 1)).slice(-2);
               
-              var today = now.getFullYear()+"-"+(month)+"-"+(day) ;
-              app.data.currentDate = today;
-            }
+            //   var today = now.getFullYear()+"-"+(month)+"-"+(day) ;
+            //   app.data.currentDate = today;
+            // }
       
             var url = 'https://apgroup.id/api/resource/Delivery Note?fields=["lr_date","name","customer_name","address_display"]&filters=[["lr_date","=","'+app.data.currentDate+'"],["deliver_date","<","1900-01-01"],["driver","=","' + app.data.user + '"]]';
 
@@ -299,6 +299,20 @@ $$(document).on('backbutton', function (e) {
   e.preventDefault();
   
   // for example, based on what and where view you have
+  var leftp  = app.panel.left && app.panel.left.opened;
+  var rightp = app.panel.right && app.panel.right.opened;
+  
+  if (leftp || rightp) {
+
+      app.panel.close();
+      return false;
+  } else
+  if ($$('.modal-in').length > 0) {
+
+      app.dialog.close();
+      app.popup.close();
+      return false;
+  } else
   if (app.views.main.router.url == '/' || app.views.main.router.url == '/tab2/' ||
     app.views.main.router.url == '/android_asset/www/index.html') {
     navigator.app.exitApp();
